@@ -21,7 +21,7 @@ async def analyze_image(file: UploadFile = File(...)):
     try:
         image = Image.open(BytesIO(contents))
     except Exception as e:
-        return {"error": f"Cannot open image: {e}"}
+        return {"error": f"画像を開けません: {e}"}
     width, height = image.size
     format = image.format
     return {"filename": file.filename, "width": width, "height": height, "format": format}
@@ -37,7 +37,7 @@ async def ocr_image(file: UploadFile = File(...), lang: str = Form('eng')):
     try:
         image = Image.open(BytesIO(contents))
     except Exception as e:
-        return {"error": f"Cannot open image: {e}"}
+        return {"error": f"画像を開けません: {e}"}
 
     # Convert to RGB for tesseract compatibility
     try:

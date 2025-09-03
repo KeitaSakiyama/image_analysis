@@ -25,18 +25,11 @@ function App() {
   };
 
   const handleUpload = async () => {
-    if (!file) return;
-    setLoading(true);
-    let formData;
-    try {
-      formData = new FormData();
-      formData.append('file', file);
-    } catch (err) {
-      setResult({ error: '画像変換エラー: ' + err.message });
-      setLoading(false);
-      return;
-    }
-    const { data, error } = await postFormData('http://localhost:8000/analyze/', formData);
+  if (!file) return;
+  setLoading(true);
+  const formData = new FormData();
+  formData.append('file', file);
+  const { data, error } = await postFormData('http://localhost:8000/analyze/', formData);
     if (error) {
       setResult({ error: '分析リクエストエラー: ' + error });
     } else {
@@ -46,19 +39,12 @@ function App() {
   };
 
   const handleOCR = async () => {
-    if (!file) return;
-    setLoading(true);
-    let formData;
-    try {
-      formData = new FormData();
-      formData.append('file', file);
-      formData.append('lang', lang);
-    } catch (err) {
-      setResult({ error: '画像変換エラー: ' + err.message });
-      setLoading(false);
-      return;
-    }
-    const { data, error } = await postFormData('http://localhost:8000/ocr/', formData);
+  if (!file) return;
+  setLoading(true);
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('lang', lang);
+  const { data, error } = await postFormData('http://localhost:8000/ocr/', formData);
     if (error) {
       setResult({ error: 'OCRリクエストエラー: ' + error });
     } else {
