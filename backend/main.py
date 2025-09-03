@@ -43,14 +43,15 @@ async def ocr_image(file: UploadFile = File(...), lang: str = Form('eng')):
     try:
         if image.mode != "RGB":
             image = image.convert("RGB")
-        # specify language for pytesseract
-        try:
-            text = pytesseract.image_to_string(image, lang=lang)
-        except Exception as e:
-            # common cause: requested language not installed in tesseract
-            return {"error": f"OCR failed (language '{lang}' may be missing): {e}"}
     except Exception as e:
-        return {"error": f"OCR failed: {e}"}
+        return {"error": f"Image conversion to RGB failed: {e}"}
+
+    # specify language for pytesseract
+    try:
+        text = pytesseract.image_to_string(image, lang=lang)
+    except Exception as e:
+        # common cause: requested language not installed in tesseract
+        return {"error": f"OCR failed (language '{lang}' may be missing): {e}"}
 
     # include metadata so frontend can show size/format alongside OCR text
     try:
